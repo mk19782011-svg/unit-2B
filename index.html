@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان اللغة الإنجليزية - Unit 2 | الأستاذ محمد تيسير الخرشة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #080b14;
+            --card-bg: rgba(18, 26, 43, 0.85);
+            --border-glow: rgba(0, 229, 255, 0.25);
+            --primary-glow: #00e5ff;
+            --accent-purple: #9d4edd;
+            --accent-pink: #ff2a85;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --correct-bg: rgba(16, 185, 129, 0.15);
+            --correct-border: #10b981;
+            --wrong-bg: rgba(244, 63, 94, 0.15);
+            --wrong-border: #f43f5e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(157, 78, 221, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.15) 0%, transparent 35%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 12px;
+            direction: rtl;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Design */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 24px 20px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 0 15px rgba(0, 229, 255, 0.05);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-glow), var(--accent-purple), var(--accent-pink));
+        }
+
+        .header-section {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+        .header-section h2 {
+            font-size: 1rem;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .header-section h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary-glow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            margin: 6px 0;
+        }
+
+        .teacher-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(157, 78, 221, 0.2), rgba(0, 229, 255, 0.2));
+            color: var(--primary-glow);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        /* Start Screen */
+        .form-group {
+            margin-top: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-glow);
+            background: rgba(8, 11, 20, 0.7);
+            color: #fff;
+            font-size: 1.05rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        }
+
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-glow), var(--accent-purple));
+            color: #080b14;
+            font-weight: 900;
+            font-size: 1.15rem;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            cursor: pointer;
+            margin-top: 22px;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        /* Sticky Progress Bar */
+        #quizContainer {
+            display: none;
+        }
+
+        .sticky-progress {
+            position: sticky;
+            top: 10px;
+            z-index: 999;
+            background: rgba(8, 11, 20, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border-glow);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-bar-container {
+            width: 55%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-glow), var(--accent-pink));
+            transition: width 0.3s ease;
+        }
+
+        /* Question Formatting */
+        .question-card {
+            margin-bottom: 22px;
+        }
+
+        .passage-box {
+            background: rgba(8, 11, 20, 0.8);
+            border-right: 4px solid var(--accent-pink);
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .question-title {
+            font-size: 1.05rem;
+            margin-bottom: 14px;
+            line-height: 1.6;
+            color: var(--text-main);
+            direction: ltr;
+            text-align: left;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .q-num {
+            color: var(--primary-glow);
+            font-weight: bold;
+            margin-right: 6px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        /* Formatting Underlined and Bold text */
+        .u-bold {
+            text-decoration: underline;
+            font-weight: 800;
+            color: #ffffff;
+            background: rgba(0, 229, 255, 0.18);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            direction: ltr;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            background: rgba(8, 11, 20, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-glow);
+            background: rgba(0, 229, 255, 0.05);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 14px;
+            accent-color: var(--primary-glow);
+            width: 20px;
+            height: 20px;
+        }
+
+        .option-text {
+            font-size: 0.98rem;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        /* Result Screen */
+        #resultContainer {
+            display: none;
+        }
+
+        .score-box {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-glow);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.35);
+            background: rgba(0, 229, 255, 0.03);
+        }
+
+        .score-number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary-glow);
+            line-height: 1;
+        }
+
+        .score-total {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        .review-card {
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: left;
+            direction: ltr;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .review-card.wrong {
+            background: var(--wrong-bg);
+            border: 1px solid var(--wrong-border);
+        }
+
+        .review-card.correct {
+            background: var(--correct-bg);
+            border: 1px solid var(--correct-border);
+        }
+
+        .review-q {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .review-ans {
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .ans-wrong {
+            color: #fda4af;
+        }
+
+        .ans-right {
+            color: #6ee7b7;
+            font-weight: bold;
+        }
+
+        .error-msg {
+            color: var(--wrong-border);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- الشاشة الترحيبية -->
+    <div id="startContainer" class="glass-card">
+        <div class="header-section">
+            <h2>المملكة الأردنية الهاشمية - وزارة التربية والتعليم</h2>
+            <h1>امتحان اللغة الإنجليزية الشامل (Unit 2)</h1>
+            <div class="teacher-badge">إعداد المعلم: محمد تيسير الخرشة</div>
+        </div>
+
+        <form id="startForm" onsubmit="startExam(event)">
+            <div class="form-group">
+                <label for="studentName">اسم الطالب الثلاثي أو الرباعي (شرط الدخول):</label>
+                <input type="text" id="studentName" placeholder="أدخل اسمك كاملاً هنا..." required>
+                <div id="nameError" class="error-msg">يرجى كتابة الاسم كاملاً لتتمكن من البدء.</div>
+            </div>
+
+            <div style="margin-top: 18px; font-size: 0.9rem; color: var(--text-sub); line-height: 1.7;">
+                📌 <strong>معلومات الامتحان:</strong><br>
+                • عدد الأسئلة: 49 سؤالاً.<br>
+                • العلامة الكلية: 98 علامة (علامتان لكل سؤال).<br>
+                • يتضمن الامتحان إظهار الأخطاء والتصحيح الدقيق بعد التسليم.
+            </div>
+
+            <button type="submit" class="btn-action">دخول الامتحان 🚀</button>
+        </form>
+    </div>
+
+    <!-- نموذج الأسئلة -->
+    <div id="quizContainer">
+        <div class="sticky-progress">
+            <span id="studentDisplay" style="font-size: 0.85rem; font-weight: bold; color: var(--primary-glow);"></span>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <span id="progressText" style="font-size: 0.85rem; color: var(--text-sub);">0/49</span>
+        </div>
+
+        <form id="examForm" onsubmit="calculateResult(event)">
+            <div id="questionsWrapper"></div>
+            <button type="submit" class="btn-action">تسليم وإظهار النتيجة 🏁</button>
+        </form>
+    </div>
+
+    <!-- شاشة النتيجة -->
+    <div id="resultContainer" class="glass-card">
+        <div class="header-section">
+            <h2>نتيجة الامتحان الإلكتروني</h2>
+            <h1 id="resultStudentName"></h1>
+            <div class="teacher-badge">المعلم: محمد تيسير الخرشة</div>
+        </div>
+
+        <div class="score-box">
+            <div class="score-number" id="scoreDisplay">0</div>
+            <div class="score-total">من 98</div>
+        </div>
+
+        <div id="resultPercentage" style="text-align: center; font-weight: bold; margin-bottom: 22px; font-size: 1.25rem; color: var(--primary-glow);"></div>
+
+        <h3 style="margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">مراجعة الأخطاء والإجابات النموذجية:</h3>
+        
+        <div id="reviewWrapper"></div>
+
+        <button onclick="location.reload()" class="btn-action">إعادة الامتحان 🔄</button>
+    </div>
+
+</div>
+
+<script>
+    // جميع الأسئلة الـ 49 المرفقة
+    const questionsData = [
+        {
+            id: 1,
+            q: "Animals that are classified as ‘endangered’ are at risk of becoming ------------ .",
+            options: ["extinct", "natural", "critically", "shortage"],
+            ans: 0
+        },
+        {
+            id: 2,
+            q: "Tigers – the largest living cats on Earth – are at the top of their food chain so they have no ------------ predators.",
+            options: ["extinct", "natural", "critically", "shortage"],
+            ans: 1
+        },
+        {
+            id: 3,
+            q: "The orangutan and black rhino are ------------ endangered which means they are facing a very high risk of extinction.",
+            options: ["extinct", "natural", "critically", "shortage"],
+            ans: 2
+        },
+        {
+            id: 4,
+            q: "The blue whale is critically ------------ .",
+            options: ["endangered", "solitary", "predators", "extinct"],
+            ans: 0
+        },
+        {
+            id: 5,
+            q: "Blue whales are ------------ animals, preferring to travel alone or in small groups.",
+            options: ["endangered", "solitary", "predators", "extinct"],
+            ans: 1
+        },
+        {
+            id: 6,
+            q: "Blue whales have few natural ------------ other than man.",
+            options: ["endangered", "solitary", "predators", "extinct"],
+            ans: 2
+        },
+        {
+            id: 7,
+            q: "Until 2008, the tiny pygmy tarsier was assumed to be ------------ .",
+            options: ["endangered", "solitary", "predators", "extinct"],
+            ans: 3
+        },
+        {
+            id: 8,
+            q: "The animals look very cute and ------------ , with what looks like a permanent smile.",
+            options: ["cuddly", "solitary", "predators", "extinct"],
+            ans: 0
+        },
+        {
+            id: 9,
+            q: "Insects are ------------ because they do not have a backbone.",
+            options: ["invertebrates", "marine", "slimy", "solitary"],
+            ans: 0
+        },
+        {
+            id: 10,
+            q: "Goldfish are ------------ creatures that many people keep as pets.",
+            options: ["invertebrates", "marine", "slimy", "solitary"],
+            ans: 1
+        },
+        {
+            id: 11,
+            q: "I don't like holding fish because they are cold and ------------ .",
+            options: ["invertebrates", "marine", "slimy", "solitary"],
+            ans: 2
+        },
+        {
+            id: 12,
+            q: "Tortoises are ------------ creatures and are usually seen alone.",
+            options: ["invertebrates", "marine", "slimy", "solitary"],
+            ans: 3
+        },
+        {
+            id: 13,
+            q: "Children love small ------------ animals like rabbits and guinea pigs.",
+            options: ["furry", "nocturnal", "slimy", "solitary"],
+            ans: 0
+        },
+        {
+            id: 14,
+            q: "Owls are ------------ animals that can see very well at night.",
+            options: ["furry", "nocturnal", "slimy", "solitary"],
+            ans: 1
+        },
+        {
+            id: 15,
+            q: "What do you think? I’m ------------ between these two.",
+            options: ["torn", "say", "mind", "hand"],
+            ans: 0
+        },
+        {
+            id: 16,
+            q: "Talal: That’s what I was going to ------------ !",
+            options: ["torn", "say", "mind", "hand"],
+            ans: 1
+        },
+        {
+            id: 17,
+            q: "I can’t make up my ------------ which one though.",
+            options: ["torn", "say", "mind", "hand"],
+            ans: 2
+        },
+        {
+            id: 18,
+            q: "Fadi: It is, but something about it doesn’t ------------ me.",
+            options: ["grab", "finger", "point", "track"],
+            ans: 0
+        },
+        {
+            id: 19,
+            q: "I can’t quite put my ------ on it. Maybe it needs a better caption or something?",
+            options: ["grab", "finger", "point", "track"],
+            ans: 1
+        },
+        {
+            id: 20,
+            q: "That’s a good ------------ , but I’m not sure I can think of anything better.",
+            options: ["grab", "finger", "point", "track"],
+            ans: 2
+        },
+        {
+            id: 21,
+            q: "Hmm. I think we’re on the wrong ------------ with that thing.",
+            options: ["grab", "finger", "point", "track"],
+            ans: 3
+        },
+        {
+            id: 22,
+            q: "I think you’re ------------ on! I like it!",
+            options: ["spot", "finger", "hand", "track"],
+            ans: 0
+        },
+        {
+            id: 23,
+            q: "OK, so will we ------------ with this one then?",
+            options: ["spot", "go", "point", "track"],
+            ans: 1
+        },
+        {
+            id: 24,
+            q: "<span class='u-bold'>I’m torn between the red bike and the blue one.</span><br>The underlined phrase expresses ............... .",
+            options: ["indecision", "agreement", "disagreement", "decision"],
+            ans: 0
+        },
+        {
+            id: 25,
+            q: "<span class='u-bold'>Ok, but another option might be taking the plane.</span><br>The sentence above expresses ............... .",
+            options: ["indecision", "agreement", "disagreement", "decision"],
+            ans: 0
+        },
+        {
+            id: 26,
+            q: "The weather is really weird. It’s ------------ cold one minute and then ------------ hot the next.",
+            options: ["freezing / boiling", "boiling / freezing", "freezing / acid", "erosion / acid"],
+            ans: 0
+        },
+        {
+            id: 27,
+            q: "Pollution in the atmosphere results in -------- rain.",
+            options: ["acid", "erosion", "blistering", "turbines"],
+            ans: 0
+        },
+        {
+            id: 28,
+            q: "Soil ------------ happens when the plants and trees that keep it in place are destroyed by the elements or man.",
+            options: ["acid", "erosion", "blistering", "turbines"],
+            ans: 1
+        },
+        {
+            id: 29,
+            q: "The ------------ heat caused the pavement to melt!",
+            options: ["acid", "erosion", "blistering", "turbines"],
+            ans: 2
+        },
+        {
+            id: 30,
+            q: "Powerful wind ------------ use wind power to create energy.",
+            options: ["acid", "erosion", "blistering", "turbines"],
+            ans: 3
+        },
+        {
+            id: 31,
+            q: "A good way of reducing --------- emissions is to promote the production of electric cars, which don't produce harmful exhaust ------------ .",
+            options: ["vehicle / fumes", "vehicle / freak", "vehicle / erosion", "hot / blistering"],
+            ans: 0
+        },
+        {
+            id: 32,
+            q: "Because of global warming, ------------ weather conditions are more common with periods of drought followed by ------------ rain.",
+            options: ["freak / torrential", "freak / acid", "erosion / acid", "blistering / freak"],
+            ans: 0
+        },
+        {
+            id: 33,
+            q: "Below average rainfall can result in water ------------ .",
+            options: ["acid", "scarcity", "blistering", "turbines"],
+            ans: 1
+        },
+        {
+            id: 34,
+            q: "------------ rain is sometimes strong enough to damage the paint on your car.",
+            options: ["Acid", "Fumes", "Endangered", "Fossil"],
+            ans: 0
+        },
+        {
+            id: 35,
+            q: "Exhaust ------------ are extremely dangerous to human health.",
+            options: ["acid", "fumes", "endangered", "fossil"],
+            ans: 1
+        },
+        {
+            id: 36,
+            q: "Sometimes the only way to save an ------------ species is to move the last remaining animals to a zoo.",
+            options: ["acid", "fumes", "endangered", "fossil"],
+            ans: 2
+        },
+        {
+            id: 37,
+            q: "Known deposits of ------------ fuels may run out in the next 50-150 years.",
+            options: ["acid", "fumes", "endangered", "fossil"],
+            ans: 3
+        },
+        {
+            id: 38,
+            q: "Could technology provide a solution to global ------------ ?",
+            options: ["warming", "erosion", "habitat", "fossil"],
+            ans: 0
+        },
+        {
+            id: 39,
+            q: "The disastrous landslide was caused by soil ------------ after trees were cut down higher up the slopes.",
+            options: ["acid", "erosion", "endangered", "fossil"],
+            ans: 1
+        },
+        {
+            id: 40,
+            q: "It's boiling ------------ in Australia with the blistering ------------ reaching 45 degrees in many places this week.",
+            options: ["acid / heat", "hot / heat", "hot / acid", "fossil / heat"],
+            ans: 1
+        },
+        {
+            id: 41,
+            q: "Those ------------ temperatures continue south into Indonesia and Thailand, where it is particularly humid for the time of year.",
+            options: ["scorching", "fumes", "endangered", "fossil"],
+            ans: 0
+        },
+        {
+            id: 42,
+            q: "You can expect to get ------------ in South East Asia next week because of heavy rains.",
+            options: ["scorching", "soak", "humidity", "torrential"],
+            ans: 1
+        },
+        {
+            id: 43,
+            q: "However, as the heatwave breaks and is replaced by ------------ rain and the risk of floods and even hurricanes in the coming weeks.",
+            options: ["scorching", "soak", "humidity", "torrential"],
+            ans: 3
+        },
+        {
+            id: 44,
+            q: "Crossing to Canada, it's a completely different story – heavy snow and -------- temperatures making it a chilly minus 9 in Vancouver, and further north it's freezing cold reaching minus 28 in places.",
+            options: ["sub zero", "soak", "humidity", "torrential"],
+            ans: 0
+        },
+        {
+            id: 45,
+            q: "The ------------ snow means that it's difficult for birds to find food.",
+            options: ["blistering", "heavy", "soak", "fossil"],
+            ans: 1
+        },
+        {
+            id: 46,
+            q: "I panicked when I saw a shark's ------------ sticking out of the water.",
+            options: ["fin", "nocturnal", "scales", "skeleton"],
+            ans: 0
+        },
+        {
+            id: 47,
+            q: "These ------------ creatures sleep by day and hunt by night.",
+            options: ["fin", "nocturnal", "scales", "skeleton"],
+            ans: 1
+        },
+        {
+            id: 48,
+            q: "This is one of the most complete fossilised dinosaur ------------ ever found.",
+            options: ["fin", "nocturnal", "scales", "skeleton"],
+            ans: 3
+        },
+        {
+            id: 49,
+            q: "Two ------------ were arrested for hunting elephants for their ivory.",
+            options: ["primates", "poachers", "scales", "skeleton"],
+            ans: 1
+        }
+    ];
+
+    let currentStudentName = "";
+
+    function startExam(e) {
+        e.preventDefault();
+        const nameInput = document.getElementById('studentName').value.trim();
+        if(!nameInput) {
+            document.getElementById('nameError').style.display = 'block';
+            return;
+        }
+        currentStudentName = nameInput;
+        document.getElementById('studentDisplay').innerText = `الطالب: ${currentStudentName}`;
+        document.getElementById('startContainer').style.display = 'none';
+        document.getElementById('quizContainer').style.display = 'block';
+        
+        renderQuestions();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function renderQuestions() {
+        const wrapper = document.getElementById('questionsWrapper');
+        wrapper.innerHTML = "";
+
+        questionsData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'glass-card question-card';
+            
+            let htmlContent = "";
+            if (q.passage) {
+                htmlContent += `<div class="passage-box">📌 <strong>Read the text below:</strong><br>${q.passage}</div>`;
+            }
+
+            htmlContent += `<div class="question-title"><span class="q-num">Q${index + 1}.</span> ${q.q}</div>`;
+            htmlContent += `<div class="options-list">`;
+
+            q.options.forEach((opt, optIndex) => {
+                htmlContent += `
+                    <label class="option-item" onclick="updateProgress()">
+                        <input type="radio" name="q_${q.id}" value="${optIndex}" required>
+                        <span class="option-text">${String.fromCharCode(97 + optIndex)}) ${opt}</span>
+                    </label>
+                `;
+            });
+
+            htmlContent += `</div>`;
+            card.innerHTML = htmlContent;
+            wrapper.appendChild(card);
+        });
+    }
+
+    function updateProgress() {
+        const total = questionsData.length;
+        let answered = 0;
+        questionsData.forEach(q => {
+            if (document.querySelector(`input[name="q_${q.id}"]:checked`)) {
+                answered++;
+            }
+        });
+
+        const percent = (answered / total) * 100;
+        document.getElementById('progressBar').style.width = percent + "%";
+        document.getElementById('progressText').innerText = `${answered}/${total}`;
+    }
+
+    function calculateResult(e) {
+        e.preventDefault();
+        let score = 0;
+        const totalQuestions = questionsData.length;
+        const totalScorePossible = totalQuestions * 2;
+        const reviewWrapper = document.getElementById('reviewWrapper');
+        reviewWrapper.innerHTML = "";
+
+        questionsData.forEach((q, index) => {
+            const selectedOpt = document.querySelector(`input[name="q_${q.id}"]:checked`);
+            const selectedVal = selectedOpt ? parseInt(selectedOpt.value) : -1;
+            const isCorrect = (selectedVal === q.ans);
+
+            if (isCorrect) {
+                score += 2;
+            }
+
+            // إعداد بطاقة المراجعة للأخطاء
+            const reviewCard = document.createElement('div');
+            reviewCard.className = `review-card ${isCorrect ? 'correct' : 'wrong'}`;
+            
+            let studentAnsText = selectedVal !== -1 ? `${String.fromCharCode(97 + selectedVal)}) ${q.options[selectedVal]}` : 'لم تتم الإجابة';
+            let correctAnsText = `${String.fromCharCode(97 + q.ans)}) ${q.options[q.ans]}`;
+
+            reviewCard.innerHTML = `
+                <div class="review-q">Q${index + 1}: ${q.q.replace(/<[^>]*>?/gm, '')}</div>
+                <div class="review-ans ${isCorrect ? 'ans-right' : 'ans-wrong'}">
+                    ${isCorrect ? '✓ إجابة صحيحة:' : '✗ إجابتك:'} ${studentAnsText}
+                </div>
+                ${!isCorrect ? `<div class="review-ans ans-right">✓ الإجابة النموذجية الصحيحة: ${correctAnsText}</div>` : ''}
+            `;
+            reviewWrapper.appendChild(reviewCard);
+        });
+
+        document.getElementById('quizContainer').style.display = 'none';
+        document.getElementById('resultContainer').style.display = 'block';
+        
+        document.getElementById('resultStudentName').innerText = `الطالب: ${currentStudentName}`;
+        document.getElementById('scoreDisplay').innerText = score;
+        
+        const percentage = ((score / totalScorePossible) * 100).toFixed(1);
+        document.getElementById('resultPercentage').innerText = `النسبة المئوية: %${percentage}`;
+
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+</script>
+</body>
+</html>
